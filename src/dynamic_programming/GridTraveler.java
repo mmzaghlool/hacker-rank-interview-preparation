@@ -6,10 +6,32 @@ import java.util.Map;
 
 public class GridTraveler {
     public static void main(String[] args) {
-        int n = 1000;
-        int m = 1000;
+        int n = 18;
+        int m = 18;
 
-        System.out.println(gridTravelerInit(n, m));
+        System.out.println(gridTravelerInitTabulation(n, m));
+    }
+
+    static BigInteger gridTravelerInitTabulation(int n, int m) {
+        BigInteger[][] table = new BigInteger[n + 1][m + 1];
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table.length; j++) {
+                table[i][j] = BigInteger.valueOf(0);
+
+            }
+        }
+        table[1][1] = BigInteger.valueOf(1);
+
+        for (int i = 0; i < table.length; i++) {
+            for (int j = 0; j < table.length; j++) {
+                if (i < n)
+                    table[i + 1][j] = table[i + 1][j].add(table[i][j]);
+                if (j < m)
+                    table[i][j + 1] = table[i][j + 1].add(table[i][j]);
+            }
+        }
+
+        return table[n][m];
     }
 
     static BigInteger gridTravelerInit(int n, int m) {

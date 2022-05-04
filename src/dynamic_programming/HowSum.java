@@ -7,15 +7,39 @@ import java.util.Map;
 
 public class HowSum {
     public static void main(String[] args) {
-        int[] arr = { 7, 14 };
-        int target = 300;
+        // int[] arr = { 7, 14 };
+        // int target = 300;
+        int[] arr = { 3, 5, 4, 7, 2 };
+        int target = 8;
 
-        List<Integer> res = howSum(target, arr);
+        List<Integer> res = howSumTabulation(target, arr);
         if (res != null) {
             System.out.println(res.toString());
 
+        } else {
+            System.out.println("null");
         }
-        System.out.println("None");
+    }
+
+    static List<Integer> howSumTabulation(int target, int[] arr) {
+        List<Integer>[] table = new ArrayList[target + 1];
+        table[0] = new ArrayList<>();
+
+        for (int i = 0; i < table.length; i++) {
+            if (table[i] == null)
+                continue;
+
+            for (int num : arr) {
+                int sum = num + i;
+                if (sum > target)
+                    continue;
+
+                table[sum] = new ArrayList<>(table[i]);
+                table[sum].add(num);
+            }
+        }
+
+        return table[target];
     }
 
     static List<Integer> howSum(int target, int[] arr) {
